@@ -9,7 +9,7 @@
 
 ### Python Env ###
 venv
-local_settings.py
+src/local_settings.py
 
 ### API Key ###
 data_app/.api_key
