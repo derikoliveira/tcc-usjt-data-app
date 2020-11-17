@@ -1,0 +1,22 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### Python Env ###
+venv
+local_settings.py
+
+### API Key ###
+data_app/.api_key
+src/main/resources/application.properties
+
+__pycache__/
+
+.ipynb_checkpoints
+
+chromedriver.exe

@@ -1,0 +1,16 @@
+services:
+  db:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: alunos
+      MYSQL_PASSWORD: alunos
+      MYSQL_USER: alunos
+      MYSQL_DATABASE: SISTEMA_INVESTIMENTO
+    ports:
+    - 3306:3306
+    volumes:
+    - data:/var/lib/mysql
+
+volumes:
+  data:
