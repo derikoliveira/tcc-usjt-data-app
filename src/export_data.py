@@ -30,7 +30,7 @@ def load_data(mysql_obj):
     SELECT ta.alta, ta.baixa, ta.fechamento_ajustado, ta.data, tdr.fechamento AS dollar, inv.nome
     FROM tb_acao ta
         INNER JOIN tb_dolar_real tdr ON ta.data = tdr.data
-        INNER JOIN tb_investimento inv ON ta.id_investimento = inv.id OR tdr.id_investimento = inv.id
+        INNER JOIN tb_investimento inv ON ta.id_investimento = inv.id
     ORDER BY inv.nome;
     """
     data = mysql_obj.execute_read_query(query)
