@@ -11,7 +11,7 @@ def main():
     mysql_obj = setup_mysql()
     data = load_data(mysql_obj)
     pathlib.Path(os.path.join('..', 'data')).mkdir(parents=True, exist_ok=True)
-    data.to_csv(os.path.join('..', 'data', '%s.csv' % datetime.today().strftime('%Y_%M_%d')), index=True, header=True)
+    data.to_csv(os.path.join('..', 'data', '%s.csv' % datetime.today().strftime('%Y_%m_%d')), index=True, header=True)
     mysql_obj.connection.close()
     print('Data exported successfully!')
 
