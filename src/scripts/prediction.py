@@ -3,6 +3,7 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
 
 from constants import INVESTMENT_TYPE
 from models.investment import Investment
@@ -73,13 +74,21 @@ class PredictionImport:
         self.y_valid = valid['adjusted_close']
 
     def linear_regression(self):
-        self.model.fit(self.x_train, self.y_train)
+        poly_reg = PolynomialFeatures(degree=2)
+        X_poly = poly_reg.fit_transform(self.x_train)
+        self.model.fit(X_poly, self.y_train)
         # make predictions and find the rmse
-        preds = self.model.predict(self.x_valid)
-        rms = np.sqrt(np.mean(np.power((np.array(self.y_valid) - np.array(preds)), 2)))
-        print(rms)
+        # preds = self.model.predict(self.x_valid)
+
+        print(self.model.score(X_poly, self.y_train) * 100)
+
+        # X_poly_valid = poly_reg.fit_transform(self.x_valid)
+        # preds = self.model.predict(X_poly_valid)
+        # rms = np.sqrt(np.mean(np.power((np.array(self.y_valid) - np.array(preds)), 2)))
+        # print(rms)
 
     def predict(self):
+        poly_reg = PolynomialFeatures(degree=2)
         self.generate_nan_rows()
         pred = self.prediction
         one_day = np.timedelta64(1, 'D')
@@ -91,7 +100,8 @@ class PredictionImport:
                 pred.loc[i].moving_average_7 = pred.iloc[count - 7:count - 1].moving_average_7.mean()
                 pred.loc[i].moving_average_30 = pred.iloc[count - 29:count - 1].moving_average_30.mean()
                 # predict
-                pred.loc[i].adjusted_close = self.model.predict([pred.loc[i].drop('adjusted_close')])
+                X_poly = poly_reg.fit_transform([pred.loc[i].drop('adjusted_close')])
+                pred.loc[i].adjusted_close = self.model.predict(X_poly)
             count += 1
 
     def generate_nan_rows(self):
