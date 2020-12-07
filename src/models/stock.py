@@ -20,7 +20,7 @@ class Stock:
 
     def get_all_by_investment_id(self, investment_id):
         query = f"""SELECT 
-                (alta, baixa, fechamento_ajustado, data)
+                alta, baixa, fechamento_ajustado, data
             FROM
                 {self.table_name}
             WHERE
